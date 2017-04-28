@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpackConfig = {
   entry:{
@@ -12,10 +13,11 @@ const webpackConfig = {
     //使用node内置path模块中加上__dirname全局变量防止不同操作系统之间的文件路径问题
     //path配置Webpack的结果存储在哪里
     path:path.resolve(__dirname,'dist'),
-    //产生的bundle文件名:chunkhash+name.js
-    filename:'[chunkhash].[name].js',
+    //产生的bundle文件名
+    filename:'[name].[chunkhash:8].js',
     //publicPath则被许多Webpack插件用于生产模式下更新内嵌css\html文件内的url值
-    publicPath:'/assets/'
+    //publicPath:'/assets/'
+    publicPath:'/'
   },
   module:{
     rules:[
@@ -37,6 +39,12 @@ const webpackConfig = {
     //添加manifest是为了避免每次vendor都在构建中改变,使得浏览器缓存机制失效
     new webpack.optimize.CommonsChunkPlugin({
       names:['vendor','manifest'],
+    }),
+    //自动生成页面:文件名带上hash后,hash变化都需要在HTML文件内手动修改引用文件名,这样太麻烦了
+    //因此我们使用html-webpack-plugin 来帮我们自动处理这种事情,简化创建服务于webpack bundle 的HTML文件
+    new HtmlWebpackPlugin({
+      filename:'index.html',
+      template:'index.html',
     }),
   ],
   devServer:{
