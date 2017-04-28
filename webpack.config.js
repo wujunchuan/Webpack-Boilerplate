@@ -1,5 +1,6 @@
 const path = require('path');
-module.exports = {
+
+const webpackConfig = {
   entry:{
     "index":'./app/entry.js'
   },
@@ -14,6 +15,7 @@ module.exports = {
   },
   module:{
     rules:[
+      //babel for translate es6 to es5
       {
         test:/\.js$/,
         exclude:/node_modules/,
@@ -21,4 +23,10 @@ module.exports = {
       },
     ]
   },
+  devServer:{
+    //防止端口冲突,将Webpack-dev-server的端口切换成8081
+    port:8081
+  }
 };
+
+module.exports = webpackConfig;
