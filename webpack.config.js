@@ -1,13 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackConfig = {
   entry:{
     "vendor":[
       'jquery',
     ],
-    "index":'./app/entry.js',
+    "index":'./app/js/entry.js',
   },
   output:{
     //使用node内置path模块中加上__dirname全局变量防止不同操作系统之间的文件路径问题
@@ -27,6 +28,13 @@ const webpackConfig = {
         exclude:/node_modules/,
         loader:'babel-loader',
       },
+      {
+        test:/\.css$/,
+        exclude:/node_modules/,
+        use: ExtractTextPlugin.extract({
+          use:'css-loader'
+        })
+      }
     ]
   },
   plugins:[
@@ -46,6 +54,7 @@ const webpackConfig = {
       filename:'index.html',
       template:'index.html',
     }),
+    new ExtractTextPlugin('[name].[chunkhash:8].css'),
   ],
   devServer:{
     //防止端口冲突,将Webpack-dev-server的端口切换成8081

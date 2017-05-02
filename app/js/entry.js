@@ -1,3 +1,5 @@
+import '../css/entry.css';
+
 const average = '90';
 const totalMessage = `so average number is ${average}`;
 
