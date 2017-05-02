@@ -4,8 +4,8 @@
   "description": "This is a Webpack@2.x demo",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack --config webpack.config.js",
-    "server": "webpack-dev-server"
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "John <wujunchuan1994@hotmail.com>",
